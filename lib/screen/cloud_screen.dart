@@ -12,43 +12,46 @@ class CloudScreen extends StatelessWidget {
         ),
       ),
       child: Stack(
-        overflow: Overflow.visible,
         children: [
           Positioned(
             bottom: MediaQuery.of(context).size.height * 0.15,
             child: Image(
+              repeat: ImageRepeat.repeatX,
+              width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.40,
               image: NetworkImage(
                   'http://www.testomic.com/public/codepen-assets/img/paralax/rocks2.png'),
-              repeat: ImageRepeat.repeatX,
             ),
           ),
           Positioned(
             bottom: MediaQuery.of(context).size.height * 0.25,
             child: Image(
               height: MediaQuery.of(context).size.height * 0.35,
+              width: MediaQuery.of(context).size.width,
+              repeat: ImageRepeat.repeatX,
               image: NetworkImage(
                   'http://www.testomic.com/public/codepen-assets/img/paralax/rocks1.png'),
-              repeat: ImageRepeat.repeatX,
             ),
           ),
           Positioned(
             bottom: MediaQuery.of(context).size.height * 0.15,
             child: Image(
+              repeat: ImageRepeat.repeatX,
+              width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.40,
               image: NetworkImage(
                   'http://www.testomic.com/public/codepen-assets/img/paralax/hills.png'),
-              repeat: ImageRepeat.repeatX,
             ),
           ),
           Positioned(
             bottom: 0,
             child: Image(
+              repeat: ImageRepeat.repeatX,
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height / 2,
               image: NetworkImage(
                   'http://www.testomic.com/public/codepen-assets/img/paralax/foreground.png'),
-              height: MediaQuery.of(context).size.height / 2,
               fit: BoxFit.fill,
-              repeat: ImageRepeat.repeatX,
             ),
           ),
         ],
