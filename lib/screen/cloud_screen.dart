@@ -1,60 +1,101 @@
 import 'package:flutter/material.dart';
 
 class CloudScreen extends StatelessWidget {
+  final imageUrl = {
+    'background':
+        'http://www.testomic.com/public/codepen-assets/img/paralax/background.jpg',
+    'foreground':
+        'http://www.testomic.com/public/codepen-assets/img/paralax/foreground.png',
+    'hills':
+        'http://www.testomic.com/public/codepen-assets/img/paralax/hills.png',
+    'rock1':
+        'http://www.testomic.com/public/codepen-assets/img/paralax/rocks1.png',
+    'rock2':
+        'http://www.testomic.com/public/codepen-assets/img/paralax/rocks2.png'
+  };
+
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
           image: NetworkImage(
-              'http://www.testomic.com/public/codepen-assets/img/paralax/background.jpg'),
-          fit: BoxFit.cover
+            imageUrl['background'],
+          ),
+          fit: BoxFit.cover,
         ),
       ),
       child: Stack(
+        fit: StackFit.expand,
         children: [
-          Positioned(
-            bottom: MediaQuery.of(context).size.height * 0.15,
-            child: Image(
-              repeat: ImageRepeat.repeatX,
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.40,
-              image: NetworkImage(
-                  'http://www.testomic.com/public/codepen-assets/img/paralax/rocks2.png'),
-            ),
+          ParallaxImage(
+            animationDurationSecond: 240,
+            tweenEnd: -50,
+            imageUrl: imageUrl['rock2'],
+            alignmentHeight: 0.15,
+            scale: 0.25,
+            height: 0.4,
           ),
-          Positioned(
-            bottom: MediaQuery.of(context).size.height * 0.25,
-            child: Image(
-              height: MediaQuery.of(context).size.height * 0.35,
-              width: MediaQuery.of(context).size.width,
-              repeat: ImageRepeat.repeatX,
-              image: NetworkImage(
-                  'http://www.testomic.com/public/codepen-assets/img/paralax/rocks1.png'),
-            ),
+          ParallaxImage(
+            animationDurationSecond: 120,
+            tweenEnd: -50,
+            imageUrl: imageUrl['rock1'],
+            alignmentHeight: 0.25,
+            scale: 0.25,
+            height: 0.35,
           ),
-          Positioned(
-            bottom: MediaQuery.of(context).size.height * 0.15,
-            child: Image(
-              repeat: ImageRepeat.repeatX,
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.40,
-              image: NetworkImage(
-                  'http://www.testomic.com/public/codepen-assets/img/paralax/hills.png'),
-            ),
+          ParallaxImage(
+            animationDurationSecond: 60,
+            tweenEnd: -5,
+            imageUrl: imageUrl['hills'],
+            alignmentHeight: 0.45,
+            scale: 0.25,
+            height: 0.4,
           ),
-          Positioned(
-            bottom: 0,
-            child: Image(
-              repeat: ImageRepeat.repeatX,
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height / 2,
-              image: NetworkImage(
-                  'http://www.testomic.com/public/codepen-assets/img/paralax/foreground.png'),
-              fit: BoxFit.fill,
-            ),
+          ParallaxImage(
+            animationDurationSecond: 30,
+            tweenEnd: -50,
+            imageUrl: imageUrl['foreground'],
+            alignmentHeight: 1.0,
+            height: 0.25,
+            scale: 0.5,
           ),
         ],
+      ),
+    );
+  }
+}
+
+class ParallaxImage extends StatelessWidget {
+  final int animationDurationSecond;
+  final double tweenEnd;
+  final String imageUrl;
+  final double alignmentHeight;
+  final double scale;
+  final double height;
+
+  ParallaxImage(
+      {this.animationDurationSecond,
+      this.tweenEnd,
+      this.imageUrl,
+      this.alignmentHeight,
+      this.scale,
+      this.height});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: TweenAnimationBuilder(
+        duration: Duration(seconds: animationDurationSecond),
+        tween: Tween<double>(begin: 0, end: tweenEnd),
+        builder: (context, value, child) => Image.network(
+          imageUrl,
+          repeat: ImageRepeat.repeatX,
+          width: MediaQuery.of(context).size.width * 4,
+          height: height,
+          alignment: Alignment(value, alignmentHeight),
+          scale: scale,
+        ),
       ),
     );
   }
